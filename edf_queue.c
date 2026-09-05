@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mramaros <mramaros@student.42antananarivo  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/01 14:07:55 by mramaros          #+#    #+#             */
-/*   Updated: 2026/09/01 14:27:12 by mramaros         ###   ########.fr       */
+/*   Created: 2026/09/03 01:10:59 by mramaros          #+#    #+#             */
+/*   Updated: 2026/09/03 01:11:01 by mramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,12 @@ void	*is_fonction_edf(t_data *data, t_coders *coder)
 	data->ticket_place++;
 	coder->ticket = data->ticket_place;
 	pthread_mutex_unlock(&data->write_mutex);
-
 	pthread_mutex_lock(&data->write_mutex);
-	while (!my_turn_edf(coder) && !(data->burn_out_time))
+	while (!my_turn_edf(coder) && !data->burn_out_time)
 		pthread_cond_wait(&data->cond, &data->write_mutex);
 	coder->ticket = 0;
 	pthread_cond_broadcast(&data->cond);
 	pthread_mutex_unlock(&data->write_mutex);
 	usleep(500);
-	return NULL;
+	return (NULL);
 }

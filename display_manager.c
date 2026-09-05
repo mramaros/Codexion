@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dongles_utils.c                                    :+:      :+:    :+:   */
+/*   display_manager.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mramaros <mramaros@student.42antananarivo  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/03 01:10:51 by mramaros          #+#    #+#             */
-/*   Updated: 2026/09/03 01:10:52 by mramaros         ###   ########.fr       */
+/*   Created: 2026/09/03 01:10:36 by mramaros          #+#    #+#             */
+/*   Updated: 2026/09/03 01:10:37 by mramaros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
-t_dongle	*get_dongle_id(t_dongle *dongle, int id)
+const char	*get_color_for_coder(int coder_id)
 {
-	t_dongle	*current;
+	static const char	*colors[] = {
+		"\033[31m",
+		"\033[32m",
+		"\033[33m",
+		"\033[34m",
+		"\033[35m",
+		"\033[36m",
+		"\033[37m",
+		"\033[91m",
+		"\033[92m",
+		"\033[93m",
+		"\033[94m",
+		"\033[95m",
+		"\033[96m"
+	};
 
-	current = dongle;
-	while (current)
-	{
-		if (current->id == id)
-			return (current);
-		current = current->next;
-	}
-	return (NULL);
-}
-
-void	manage_dongle(t_dongle *dongle, t_data *data, int coder_id, char *msg)
-{
-	(void)dongle;
-	if (!simulation_is_end(data))
-		log_action(data, coder_id, msg);
+	return (colors[(coder_id - 1) % 13]);
 }
